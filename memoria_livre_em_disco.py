@@ -1,13 +1,24 @@
 # -*- coding: cp1252 -*-
-#verifica memoria disponivel em disco
+#Verifica memoria disponivel em disco
+#Compatível com 2.7
 
+#Autor: Israel Gomes
+#Data Upload: 23/10/2017
+#Data Criação: 18/02/2017
+
+from psutil import disk_usage #python27
 from time import sleep
-from psutil import disk_usage#python27
 import Tkinter as t
 import threading as td
-import random
-import psutil
 
+from sys import version
+if version[0] == "2":#Importação compatível com py 2.7
+    import Tkinter as t
+    import requests
+elif version[0] == "3":#Importação compatível com py 3
+    import tkinter as t
+    import urllib.request
+    
 
 class janela(t.Frame):
     def __init__(self, master=None, fundo="#000000", *args, **kwargs):
@@ -93,12 +104,12 @@ class janela(t.Frame):
                     print "erro"
             
 
-            #psutil.virtual_memory().free/1024.0/1024.0/1024.0#memoria virtual livre
+            #virtual_memory().free/1024.0/1024.0/1024.0#memoria virtual livre
         self.evento.set()
         
     def getDisk_partitions(self):
         partitions = []
-        for disk in psutil.disk_partitions():
+        for disk in disk_partitions():
             #print(disk.fstype)
             if disk.fstype == "NTFS" or disk.fstype == "CDFS" or disk.fstype == "FAT32":# device, mountpoint, fstype (filesysten type), opts
                 partitions.append((disk.device, disk.fstype))
